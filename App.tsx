@@ -1,11 +1,11 @@
 import React from 'react';
-import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -17,8 +17,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { RootStacksProp } from './Stacks';
 
-const Section = ({children, title}): Node => {
+interface AppProps {
+  navigation?: RootStacksProp;
+}
+
+const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -44,7 +49,7 @@ const Section = ({children, title}): Node => {
   );
 };
 
-const App: () => Node = () => {
+const App: React.FC<AppProps> = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -62,10 +67,14 @@ const App: () => Node = () => {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
+          <TouchableOpacity onPress={() => {
+            props.navigation.navigate('Main');
+          }}>
+            <Section title="Navigate to Page Home">
+              Edit <Text style={styles.highlight}>App.js</Text> to change this
+              screen and then come back to see your edits.
+            </Section>
+          </TouchableOpacity>
           <Section title="See Your Changes">
             <ReloadInstructions />
           </Section>
